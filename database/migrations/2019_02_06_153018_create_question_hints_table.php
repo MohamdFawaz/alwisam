@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class ExmasTable extends Migration
+class CreateQuestionHintsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,10 @@ class ExmasTable extends Migration
      */
     public function up()
     {
-        Schema::create('exams', function (Blueprint $table) {
+        Schema::create('question_hints', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('title');
-            $table->integer('category_id');
-            $table->integer('exam_type_id');
-            $table->integer('status')->default(0);
-            $table->integer('has_code')->default(0);
+            $table->integer('question_id');
+            $table->text('hint_text');
             $table->timestamps();
         });
     }
@@ -31,6 +28,6 @@ class ExmasTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('question_hints');
     }
 }

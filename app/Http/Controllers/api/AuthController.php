@@ -14,8 +14,6 @@ use App\Http\Requests\User\SignupRequest;
 class AuthController extends APIController
 {
     protected $repository;
-    protected $tempUserRepository;
-    protected $socialLoginRepository;
 
     /**
      * __construct.
@@ -29,7 +27,6 @@ class AuthController extends APIController
     {
         $this->repository = $repository;
         $this->setLang('ar');
-        $request->headers->set('Accept', 'application/json');
     }
     /**
      * Log the user in.

@@ -41,4 +41,12 @@ Route::group(['prefix' => 'category'], function () {
 Route::group(['prefix' => 'exams'], function () {
     Route::get('type/{category_id}', 'api\ExamTypeController@index')->where(['category_id' => '[0-9]+']);
     Route::post('type/add', 'api\ExamTypeController@store');
+    Route::get('list_free/{category_id}', 'api\ExamController@listFree')->where(['category_id' => '[0-9]+']);
+    Route::get('list_with_code/{category_id}/{code}', 'api\ExamController@listWithCode')->where(['category_id' => '[0-9]+']);
+    Route::post('add', 'api\ExamController@store');
+});
+
+//questions routes
+Route::group(['prefix' => 'question'], function () {
+    Route::get('all/{exam_id}', 'api\ExamQuestionController@listQuestion')->where(['exam_id' => '[0-9]+']);
 });
