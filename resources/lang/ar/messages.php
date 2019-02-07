@@ -17,6 +17,8 @@ return [
         'login_failed' => 'فشل في تسجيل الدخول،تأكد من صحة البيانات',
         'created_successfully' => 'تم انشاء الحساب بنجاح',
         'activated_successfully' => 'تم تفيعل الحساب بنجاح',
+        'profile_info' => 'البيانات الشخصية',
+        'password_updated_successfully' => 'تم تعديل كلمة المرور بنجاح',
         'wrong_activate_code' => 'خطأ في تفعيل الحساب او حسابك مفعل من قبل',
     ],
     'category' => [
@@ -27,6 +29,26 @@ return [
     ],
     'exam' => [
         'list' => "قائمة الاختبارات"
+    ],
+    'question' => [
+        'list' => "قائمة الاسئلة"
+    ],
+    'user_progress' => [
+        'updated_successfully' => "تم التعدبل بنجاح"
+    ],
+    'notification' => [
+        'list' => "قائمة الاشعارات"
+    ],
+    'link' => [
+        'list' => "قائمة الروابط المهمة"
+    ],
+    'suggestion' => [
+        'added' => "تم اضافةالمقرح بنجاح"
+    ],
+    'setting' => [
+        'about_us' => "عن التطبيق",
+        'terms_and_condition' => "الشروط و الاحكام",
+        'social_links' => "الروابط"
     ],
     'something_went_wrong' => 'حدث خطأ ما، برجاء المحاولة مرة اخرى ',
 

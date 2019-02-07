@@ -177,6 +177,20 @@ class UserRepository extends BaseRepository
         return true;
     }
 
+    public function getUserByID($user_id)
+    {
+        $user = User::find($user_id)->first();
+        return $user;
+    }
+
+    public function updateUserPasswordByID($user_id,$password)
+    {
+        $user = User::find($user_id)->first();
+        $user->password = Hash::make($password);
+        $user->save();
+        return $user;
+    }
+
     public function sendSMS($mobile_number)
     {
 

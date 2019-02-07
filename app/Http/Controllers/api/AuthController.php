@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\api;
 
 use App\Http\Requests\User\ActivateAccountRequest;
+use App\Http\Requests\User\ChangePasswordRequest;
 use App\Http\Requests\User\ForgotPasswordRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -84,6 +85,28 @@ class AuthController extends APIController
             $user->save();
             $user = $this->repository->getLoggedUserDetails($user);
             return $this->respond(trans('messages.auth.activated_successfully'),$user);
+        }
+    }
+
+    public function getProfile($user_id)
+    {
+        $user  = $this->repository->getUserByID($user_id);
+        if(!$user){
+            return $this->respondWithError(trans('messages.something_went_wrong'));
+        }else{
+            $user = $this->repository->getLoggedUserDetails($user);
+            return $this->respond(trans('messages.auth.profile_info'),$user);
+        }
+    }
+
+    public function changePassword(ChangePasswordRequest $request)
+    {
+        $user  = $this->repository->updateUserPasswordByID($request->user_id,$request->new_password);
+        if(!$user){
+            return $this->respondWithError(trans('messages.something_went_wrong'));
+        }else{
+            $user = $this->repository->getLoggedUserDetails($user);
+            return $this->respond(trans('messages.auth.password_updated_successfully'),$user);
         }
     }
 

@@ -4,6 +4,7 @@ namespace App\Repositories\ExamQuestion;
 
 use App\Models\Exam;
 use App\Models\ExamQuestion;
+use App\Repositories\QuestionHint\QuestionHintRepository;
 use App\Repositories\BaseRepository;
 
 
@@ -19,11 +20,13 @@ class ExamQuestionRepository extends BaseRepository
 * @var object
 */
     public $model;
+    public $questionHitRepository;
 
 
-    public function __construct(ExamQuestion $model)
+    public function __construct(ExamQuestion $model, QuestionHintRepository $questionHitRepository)
     {
         $this->model = $model;
+        $this->questionHitRepository = $questionHitRepository;
     }
 
 
@@ -36,8 +39,8 @@ class ExamQuestionRepository extends BaseRepository
     }
 
     public function getAllExamQuestions($exam_id){
-        $exams = ExamQuestion::where('exam_id',$exam_id)->get();
-        return $this->getAllQuestionDetails($exams);
+        $questions = ExamQuestion::whereHas('answers')->where('exam_id',$exam_id)->get();
+        return $this->getAllQuestionDetails($questions);
 
     }
 
@@ -49,10 +52,12 @@ class ExamQuestionRepository extends BaseRepository
             $question_item['id'] = $question->id;
             $question_item['question_text'] = $question->description;
             $question_item['answers'] = $this->getAllAnswers($question->answers);
+            $question_item['hint'] = $this->questionHitRepository->getHintByQuestionID($question->id);
             $question_list[] = $question_item;
         }
         return $question_list;
     }
+
     public function getAllAnswers($answers){
         $answer_item = [];
         $answer_list = [];

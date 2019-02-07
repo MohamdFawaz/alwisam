@@ -9,7 +9,7 @@ use Illuminate\Validation\Rule;
 /**
  * Class ManageSettingsRequest.
  */
-class ChangePasswordRequest extends Request
+class UpdateProgressRequest extends Request
 {
 
 
@@ -23,7 +23,6 @@ class ChangePasswordRequest extends Request
         return true;
     }
 
-
     /**
      * Get the validation rules that apply to the request.
      *
@@ -36,7 +35,7 @@ class ChangePasswordRequest extends Request
         $user_id = $this->input('user_id');
         return [
             'user_id'       => 'required|exists:users,id',
-            'new_password'       => 'required',
+            'question_id'       => 'required',
             'jwt_token' => [
                     'required',
                     Rule::exists('users')->where(function ($query) use ($user_id,$jwt_token) {
@@ -51,7 +50,7 @@ class ChangePasswordRequest extends Request
     {
         return [
             'user_id.required' => trans('validation.user_id'),
-            'new_password.required' => trans('validation.new_password'),
+            'question_id.required' => trans('validation.question_id'),
         ];
     }
 }
