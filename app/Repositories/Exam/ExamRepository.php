@@ -42,14 +42,14 @@ class ExamRepository extends BaseRepository
     }
 
     public function getFreeExams($category_id){
-        $exams = Exam::whereStatus(1)->whereHasCode(0)->whereCategoryId($category_id)->get();
+        $exams = Exam::whereStatus(1)->whereHas('questions')->whereHasCode(0)->whereCategoryId($category_id)->get();
         return $this->getAllExamsDetail($exams);
     }
 
     public function getCodeExams($category_id,$code){
         $exams = Exam::whereHas('code',function ($query) use ($code){
             $query->where('code', $code);
-        })->whereStatus(1)->whereHasCode(1)->whereCategoryId($category_id)->get();
+        })->whereStatus(1)->whereHas('questions')->whereHasCode(1)->whereCategoryId($category_id)->get();
         return $this->getAllExamsDetail($exams);
     }
 

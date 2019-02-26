@@ -30,9 +30,9 @@ class ExamQuestionController extends APIController
         $exams_list = $this->repository->getAllExamQuestions($exam_id);
         $user_progress = $this->userProgressRepository->getUserProgressByUserID($user_id,$exams_list,$exam_id);
         if($user_progress > count($exams_list)-1){
-            $data['current_question_index'] = $user_progress;
+            $data['current_question_index'] = $user_progress-1;
         }else{
-            $data['current_question_index'] = $user_progress+1;
+            $data['current_question_index'] = $user_progress;
         }
         $data['correct_answers_count'] = $this->userProgressRepository->getCorrectAnswerCount($user_id,$exam_id);
         $data['wrong_answers_count'] = $this->userProgressRepository->getWrongAnswerCount($user_id,$exam_id);
