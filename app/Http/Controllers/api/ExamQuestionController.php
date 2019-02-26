@@ -28,7 +28,14 @@ class ExamQuestionController extends APIController
 
     public function listQuestion($exam_id,$user_id){
         $exams_list = $this->repository->getAllExamQuestions($exam_id);
-        $data['current_question_index'] = $this->userProgressRepository->getUserProgressByUserID($user_id,$exams_list);
+        $user_progress = $this->userProgressRepository->getUserProgressByUserID($user_id,$exams_list,$exam_id);
+        if($user_progress > count($exams_list)-1){
+            $data['current_question_index'] = $user_progress;
+        }else{
+            $data['current_question_index'] = $user_progress+1;
+        }
+        $data['correct_answers_count'] = $this->userProgressRepository->getCorrectAnswerCount($user_id,$exam_id);
+        $data['wrong_answers_count'] = $this->userProgressRepository->getWrongAnswerCount($user_id,$exam_id);
         $data['questions'] = $exams_list;
         return $this->respond(trans('messages.question.list'),$data);
     }

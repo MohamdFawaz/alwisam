@@ -36,7 +36,6 @@ class SettingController extends APIController
 
     public function socialLinks(){
         $socialLinks = $this->repository->getSettingByKey('social_links');
-
         return $this->respond(trans('messages.setting.social_links'),json_decode($socialLinks));
     }
 

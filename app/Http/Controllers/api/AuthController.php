@@ -49,7 +49,7 @@ class AuthController extends APIController
                 $this->repository->getLoggedUserDetails($user)
             );
         }else{
-            return $this->respondWithError(trans('messaged.auth.login_failed'));
+            return $this->respondWithError(trans('messages.auth.login_failed'));
         }
     }
 
@@ -61,11 +61,13 @@ class AuthController extends APIController
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function signup(SignupRequest $request)
-    {
-        if($user = $this->repository->create($request->all())){
+    public function signup(Request $request)
+    {      $data = json_decode($request->data);
+            if ($this->repository->checkIFEmailExists($data['email'])){
+                return $this->respondWithError(trans('validation.email'));
+            }
+        if($user = $this->repository->create($data,$request->user_image)){
             return $this->respond(
-                200,
                 trans('messages.auth.created_successfully'),
                 $user
             );
@@ -116,15 +118,28 @@ class AuthController extends APIController
         if(!$user){
             return $this->respondWithError(trans('messages.auth.phone_not_exists'));
         }
-        $sms_code = $this->repository->sendSMS($user->phone);
+//        $sms_code = $this->repository->sendSMS($user->phone);
         $sms_code['response'] = 1;
         if($sms_code['response']== '1'){
-            $user->activate_code = $sms_code['code'];
+            $user->activate_code = 0000;
             $user->user_status = 0;
             $user->jwt_token = str_random(25);
             $user->save();
             $userDetails = $this->repository->getLoggedUserDetails($user);
             return $this->respond(trans('messages.auth.message_sent'),$userDetails);
+        }else{
+            return $this->respondWithError(trans('messages.something_went_wrong'));
+        }
+    }
+
+    public function edit(Request $request){
+        $data = json_decode($request->data);
+        $updated_profile = $this->repository->update($data,$request->user_image);
+        if($updated_profile){
+            return $this->respond(
+                trans('messages.profile.updated'),
+                $updated_profile
+            );
         }else{
             return $this->respondWithError(trans('messages.something_went_wrong'));
         }

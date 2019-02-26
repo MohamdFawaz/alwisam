@@ -19,6 +19,10 @@ class UserProgressController extends APIController
     }
 
     public function updateUserProgress(UpdateProgressRequest $request){
+      if($request->question_id == 0){
+          $this->repository->deleteProgress($request->user_id,$request->exam_id);
+          return $this->respondWithMessage(trans('messages.user_progress.delete_successfully'));
+      }
       $updated = $this->repository->updateOrCreate($request->all());
       if($updated){
           return $this->respondWithMessage(trans('messages.user_progress.updated_successfully'));

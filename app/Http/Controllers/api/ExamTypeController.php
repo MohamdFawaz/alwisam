@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\api;
 
 use App\Models\ExamType;
-use App\Repositories\Category\CategoryRepository;
 use Illuminate\Http\Request;
 
 
@@ -19,9 +18,8 @@ class ExamTypeController extends APIController
      * @param $tempUserRepository
      * @param $socialLoginRepository
      */
-    public function __construct(CategoryRepository $repository, Request $request)
+    public function __construct(Request $request)
     {
-        $this->repository = $repository;
         $this->setLang('ar');
         $request->headers->set('Accept', 'application/json');
     }
@@ -41,9 +39,7 @@ class ExamTypeController extends APIController
 
     public function store(Request $request)
     {
-
         $examType = ExamType::create($request->all());
-
         return $this->respond(trans('messages.exam_type.list'),$examType);
     }
 

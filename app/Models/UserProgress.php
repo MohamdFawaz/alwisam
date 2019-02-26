@@ -6,5 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class UserProgress extends Model
 {
-    protected $fillable = ['user_id','question_id','exam_id'];
+    protected $fillable = ['user_id','question_id','exam_id','is_correct'];
 }

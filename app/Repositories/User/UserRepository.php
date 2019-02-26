@@ -5,6 +5,7 @@ namespace App\Repositories\User;
 use App\Models\User;
 use App\Repositories\BaseRepository;
 use App\Repositories\Setting\SettingRepository;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Hash;
 use GuzzleHttp\Client;
 
@@ -26,54 +27,53 @@ class UserRepository extends BaseRepository
     public function __construct(User $model, SettingRepository $settingRepository)
     {
         $this->model = $model;
-        $this->settingRepository= $settingRepository;
+        $this->settingRepository = $settingRepository;
     }
 
     public function getLoggedUserDetails($user)
     {
         $data['id'] = $user['id'];
-        $data['first_name'] = ucwords($user['first_name']);
-        $data['last_name'] = ucwords($user['last_name']);
+        $data['name'] = $user['name'];
         $data['phone'] = $user['phone'];
         $data['email'] = $user['email'];
         $data['user_image'] = $user['user_image'];
+        $data['dob'] = $user['dob'];
         $data['jwt_token'] = $user['jwt_token'];
         $data['user_status'] = $user['user_status'];
         return $data;
     }
 
-    public function create($input)
+    public function create($input,$user_image = null)
     {
         $jwt_token = str_random(25);
-        $array = array(
-            'email' => $input['email'],
-            'first_name' => $input['first_name'],
-            'last_name' => $input['last_name'],
-            'firebase_token' => $input['firebase_token'],
+        $array = [
+            'email' => $input->email,
+            'name' => $input->name,
+            'firebase_token' => $input->firebase_token,
             'jwt_token' => $jwt_token,
-            'password' => Hash::make($input['password']),
-            'phone' => $input['phone'],
-            'user_image' => $input['user_image'],
-        );
+            'password' => Hash::make($input->password),
+            'phone' => $input->phone,
+            'activate_code' => 0000,
+            'dob' => Carbon::parse($input->dob)->toDateString()
+        ];
+        $userDetails = User::create($array);
+        if($user_image){
+            $userDetails->user_image = $user_image;
+        }
         //If user saved successfully, then return true
-        if ($user = User::create($array)) {
-            $input->user_id = $user->id;
-            //add new address with user id
-            return ['user_id' => $user->id,'jwt_token' => $jwt_token];
+        if ($userDetails->save()) {
+            $user = User::where('email',$array['email'])->first();
+            return $this->getLoggedUserDetails($user);
         }
 
         return false;
     }
-    public function update($input, $user_image)
+    public function update($input, $user_image = null)
     {
-
         $user = User::whereId($input->user_id)->first();
         $user->email = $input->email;
-        $user->first_name = $input->first_name;
-        $user->last_name = $input->last_name;
-        $user->lat = $input->lat;
-        $user->lng = $input->lng;
-        $user->location = $input->location;
+        $user->name = $input->name;
+        $user->dob = $input->dob;
         $user->phone = $input->phone;
 
         if($user_image){
@@ -88,7 +88,9 @@ class UserRepository extends BaseRepository
         return false;
     }
 
-
+    public function checkIFEmailExists($email){
+        return User::where('email',$email)->exists();
+    }
     public function updatePasswordProfile($input)
     {
         $updated = false;
@@ -179,7 +181,7 @@ class UserRepository extends BaseRepository
 
     public function getUserByID($user_id)
     {
-        $user = User::find($user_id)->first();
+        $user = User::whereId($user_id)->first();
         return $user;
     }
 

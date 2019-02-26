@@ -28,7 +28,7 @@ class ExamController extends APIController
         $this->setLang('ar');
         $request->headers->set('Accept', 'application/json');
     }
-
+    /* deprecated */
     public function listFree($category_id)
     {
         $data = $this->repository->getFreeExams($category_id);
@@ -36,9 +36,13 @@ class ExamController extends APIController
     }
 
 
-    public function listWithCode($category_id,$code)
+    public function list($category_id,$code)
     {
-        $data = $this->repository->getCodeExams($category_id,$code);
+        if($code){
+            $data = $this->repository->getCodeExams($category_id,$code);
+        }else{
+            $data = $this->repository->getFreeExams($category_id);
+        }
         return $this->respond(trans('messages.exam.list'),$data);
     }
 

@@ -20,6 +20,8 @@ return [
         'profile_info' => 'البيانات الشخصية',
         'password_updated_successfully' => 'تم تعديل كلمة المرور بنجاح',
         'wrong_activate_code' => 'خطأ في تفعيل الحساب او حسابك مفعل من قبل',
+        'phone_not_exists' => 'رقم الهاتف غير موجود',
+        'message_sent' => 'تم ارسال الرسالة بنجاح',
     ],
     'category' => [
         'list' => "قائمة الاقسام"
@@ -34,7 +36,8 @@ return [
         'list' => "قائمة الاسئلة"
     ],
     'user_progress' => [
-        'updated_successfully' => "تم التعدبل بنجاح"
+        'updated_successfully' => "تم التعدبل بنجاح",
+        'delete_successfully' => "تم انهاء الاختبار"
     ],
     'notification' => [
         'list' => "قائمة الاشعارات"

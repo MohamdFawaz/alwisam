@@ -25,8 +25,10 @@ Route::group(['prefix' => 'user'], function (){
     Route::group(['prefix' => 'auth'], function () {
         Route::post('login', 'api\AuthController@login');
         Route::post('activate', 'api\AuthController@activateAccount');
-        Route::post('signup', 'api\AuthController@signup')->middleware('unwrapFromJson');
+        Route::post('signup', 'api\AuthController@signup');
         Route::post('update_password', 'api\AuthController@changePassword');
+        Route::post('update', 'api\AuthController@edit');
+        Route::post('forgot_password', 'api\AuthController@forgotPassword');
     });
 });
 
@@ -41,7 +43,7 @@ Route::group(['prefix' => 'exams'], function () {
     Route::get('type/{category_id}', 'api\ExamTypeController@index')->where(['category_id' => '[0-9]+']);
     Route::post('type/add', 'api\ExamTypeController@store');
     Route::get('list_free/{category_id}', 'api\ExamController@listFree')->where(['category_id' => '[0-9]+']);
-    Route::get('list_with_code/{category_id}/{code}', 'api\ExamController@listWithCode')->where(['category_id' => '[0-9]+']);
+    Route::get('list_with_code/{category_id}/{code?}', 'api\ExamController@list')->where(['category_id' => '[0-9]+']);
     Route::post('add', 'api\ExamController@store');
 });
 
