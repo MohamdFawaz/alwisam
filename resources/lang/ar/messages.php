@@ -22,6 +22,7 @@ return [
         'wrong_activate_code' => 'خطأ في تفعيل الحساب او حسابك مفعل من قبل',
         'phone_not_exists' => 'رقم الهاتف غير موجود',
         'message_sent' => 'تم ارسال الرسالة بنجاح',
+        'account_already_exists' => 'الايميل او الجوال موجود بالفعل',
     ],
     'category' => [
         'list' => "قائمة الاقسام"

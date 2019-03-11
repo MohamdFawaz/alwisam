@@ -53,7 +53,7 @@ class UserRepository extends BaseRepository
             'jwt_token' => $jwt_token,
             'password' => Hash::make($input->password),
             'phone' => $input->phone,
-            'activate_code' => 0000,
+            'activate_code' => "0000",
             'dob' => Carbon::parse($input->dob)->toDateString()
         ];
         $userDetails = User::create($array);
@@ -90,6 +90,9 @@ class UserRepository extends BaseRepository
 
     public function checkIFEmailExists($email){
         return User::where('email',$email)->exists();
+    }
+    public function checkIFEmailOrPhoneExists($email,$phone){
+        return User::where('email',$email)->orWhere('phone',$phone)->exists();
     }
     public function updatePasswordProfile($input)
     {

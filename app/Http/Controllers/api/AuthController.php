@@ -62,9 +62,10 @@ class AuthController extends APIController
      * @return \Illuminate\Http\JsonResponse
      */
     public function signup(Request $request)
-    {      $data = json_decode($request->data);
-            if ($this->repository->checkIFEmailExists($data['email'])){
-                return $this->respondWithError(trans('validation.email'));
+    {
+        $data = json_decode($request->data);
+        if ($this->repository->checkIFEmailOrPhoneExists($data->email,$data->phone)){
+                return $this->respondWithError(trans('messages.auth.account_already_exists'));
             }
         if($user = $this->repository->create($data,$request->user_image)){
             return $this->respond(

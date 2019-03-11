@@ -14,19 +14,6 @@ use Hamcrest\Core\Set;
 class CategoryRepository extends BaseRepository
 {
 
-/**
-* related model of this repository.
-*
-* @var object
-*/
-    public $model;
-
-
-    public function __construct(Category $model)
-    {
-        $this->model = $model;
-    }
-
     public function getCategoryList($categories){
         $category_item = [];
         $category_list = [];
@@ -40,18 +27,13 @@ class CategoryRepository extends BaseRepository
         return $category_list;
     }
 
-    public function create($input){
-        if(Setting::create($input)){
-            return true;
-        }
-        return false;
+    public function getParentCategory(){
+        return Category::whereNull('parent')->get();
     }
 
-    public function delete($input){
-        if(Setting::destroy($input)){
-            return true;
-        }
-        return false;
+    public function getAll()
+    {
+        return Category::with('parentCategory')->get();
     }
 
 }

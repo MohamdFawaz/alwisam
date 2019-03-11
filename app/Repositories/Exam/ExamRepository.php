@@ -53,6 +53,12 @@ class ExamRepository extends BaseRepository
         return $this->getAllExamsDetail($exams);
     }
 
+    public function getExams()
+    {
+        $exams = Exam::get();
+        return $exams;
+    }
+
     public function getAllExamsDetail($exams)
     {
         $exam_item = [];

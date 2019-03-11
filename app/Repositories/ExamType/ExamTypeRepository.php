@@ -12,28 +12,6 @@ use App\Repositories\BaseRepository;
 class ExamTypeRepository extends BaseRepository
 {
 
-/**
-* related model of this repository.
-*
-* @var object
-*/
-    public $model;
-
-
-    public function __construct(ExamType $model)
-    {
-        $this->model = $model;
-    }
-
-
-
-    public function create($input){
-        if(ExamCode::create($input)){
-            return true;
-        }
-        return false;
-    }
-
     public function getExamTypeAll(){
         if($types= ExamType::get()){
             foreach ($types as $type){
@@ -45,5 +23,9 @@ class ExamTypeRepository extends BaseRepository
         return false;
     }
 
+    public function getAll()
+    {
+        return ExamType::sort()->get();
+    }
 
 }

@@ -72,7 +72,7 @@ class ExamQuestionRepository extends BaseRepository
 
 
     public function getAll(){
-        if($exams = ExamQuestion::get()){
+        if($exams = ExamQuestion::whereHas('exam')->get()){
             return $exams;
         }
         return false;
