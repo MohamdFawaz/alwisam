@@ -25,6 +25,15 @@ class Category extends Model
         }
     }
 
+    public function setImageAttribute($value)
+    {
+        if($value){
+            $img_name = time().rand(1111,9999).'.'.$value->getClientOriginalExtension();
+            $value->move(public_path('images/category/'),$img_name);
+            $this->attributes['image'] = $img_name ;
+        }
+    }
+
     public function child()
     {
         return $this->hasMany(Category::class,'parent')->select('id','name','image','parent');

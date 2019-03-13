@@ -4,100 +4,50 @@
     <div class="br-pageheader pd-y-15 pd-l-20">
         <nav class="breadcrumb pd-0 mg-0 tx-12">
             <a class="breadcrumb-item" href="{{route('backend.dashboard')}}">{{trans('admin.breadcrumb.dashboard')}}</a>
-            <span class="breadcrumb-item active">{{trans('admin.breadcrumb.exam_type')}}</span>
+            <span class="breadcrumb-item active">{{trans('admin.breadcrumb.exam')}}</span>
         </nav>
     </div><!-- br-pageheader -->
 @endsection
-
 
 @section('css')
     <link rel="stylesheet" href="{{asset('public/lib/select2/css/select2.min.css')}}">
 @endsection
 
 @section('content')
-    <form action="{{route('backend.exam-type.update',$category->id)}}" method="PATCH" class="form-layout form-layout-3">
+    <form action="{{route('backend.category.update',$category->id)}}" method="POST" enctype="multipart/form-data" class="form-layout form-layout-2">
+        {{csrf_field()}}
+        {{method_field('PUT')}}
+        <div >
             <div class="row no-gutters">
-                <div class="col-md-4">
-                    <div class="form-group">
-                        <input class="form-control" type="text" name="firstname" placeholder="Enter firstname (required)">
-                    </div>
-                </div><!-- col-4 -->
-                <div class="col-md-4 mg-t--1 mg-md-t-0">
-                    <div class="form-group mg-md-l--1">
-                        <input class="form-control" type="text" name="lastname" placeholder="Enter lastname (required)">
-                    </div>
-                </div><!-- col-4 -->
-                <div class="col-md-4 mg-t--1 mg-md-t-0">
-                    <div class="form-group mg-md-l--1">
-                        <input class="form-control" type="text" name="email" placeholder="Enter email address">
-                    </div>
-                </div><!-- col-4 -->
-                <div class="col-md-8">
-                    <div class="form-group bd-t-0-force">
-                        <input class="form-control" type="text" name="address" placeholder="Enter address">
+                <div class="col-md-12  mg-t--1 mg-md-t-0">
+                    <div class="form-group ">
+                        <label class="form-control-label">{{trans('admin.category.name')}}<span class="tx-danger">*</span></label>
+                        <input class="form-control" type="text" name="name" placeholder="{{trans('admin.category.name_placeholder')}}" value="{{$category->name}}">
                     </div>
                 </div><!-- col-8 -->
-                <div class="col-md-4">
-                    <div class="form-group mg-md-l--1 bd-t-0-force">
-                        <select id="select2-b" class="form-control select2-hidden-accessible" data-placeholder="Choose country" tabindex="-1" aria-hidden="true" style="width: 313px;">
-                            <option label="Choose country"></option>
-                            @foreach($parentCategories as $parentCategory)
-                                <opttion value="{{$parentCategory->id}}">{{$parentCategory->name}}</opttion>
-                            @endforeach
-                        </select>
-                        <span class="select2 select2-container select2-container--default select2-container--above" dir="ltr" style="width: 272px;">
-                            <span class="selection">
-                                <span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-labelledby="select2-select2-b-container">
-                                    <span class="select2-selection__rendered" id="select2-select2-b-container">
-                                        <span class="select2-selection__placeholder">{{trans('admin.category.chose_parent')}}</span>
-
-                                    </span>
-                                    <span class="select2-selection__arrow" role="presentation">
-                                        <b role="presentation"></b></span>
-                                </span>
-                            </span>
-                            <span class="dropdown-wrapper" aria-hidden="true"></span>
-                        </span>
+            </div><!-- row -->
+            <div class="row no-gutters bd ">
+                <div class="col-md-12 tx-center-force">
+                    <img src="{{$category->image}}" alt="category-image" style="width: 250px"/>
+                    <div class="row no-gutters ">
+                        <div class="col-lg-12 tx-center-force">
+                            <label class="custom-file">
+                                <input type="file" name="image" id="file2" class="custom-file-input">
+                                <span class="custom-file-control custom-file-control-primary"></span>
+                            </label>
+                        </div>
                     </div>
-                </div><!-- col-4 -->
+
+                </div>
+
             </div><!-- row -->
             <div class="form-layout-footer bd pd-20 bd-t-0">
-                <button class="btn btn-info">Submit Form</button>
-                <button class="btn btn-secondary">Cancel</button>
+                <button id="submit-btn" class="btn btn-info">{{trans('admin.actions.update')}}</button>
             </div><!-- form-group -->
+        </div>
     </form>
 @endsection
 
 @section('script')
-    {{--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" ></script>--}}
-
     <script src="{{asset('public/lib/select2/js/select2.min.js')}}"> </script>
-    <script>
-        $(function(){
-            'use strict';
-
-            $('.form-layout .form-control').on('focusin', function(){
-                $(this).closest('.form-group').addClass('form-group-active');
-            });
-
-            $('.form-layout .form-control').on('focusout', function(){
-                $(this).closest('.form-group').removeClass('form-group-active');
-            });
-
-            // Select2
-            $('#select2-a, #select2-b').select2({
-                minimumResultsForSearch: Infinity
-            });
-
-            $('#select2-a').on('select2:opening', function (e) {
-                $(this).closest('.form-group').addClass('form-group-active');
-            });
-
-            $('#select2-a').on('select2:closing', function (e) {
-                $(this).closest('.form-group').removeClass('form-group-active');
-            });
-
-        });
-    </script>
-
 @endsection

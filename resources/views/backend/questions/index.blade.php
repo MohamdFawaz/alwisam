@@ -15,20 +15,26 @@
 
 @section('content')
     <div class="table-wrapper">
+        <div class="">
+                <a class="btn btn-success" href="{{route('backend.questions.create')}}">{{trans('admin.actions.create')}}</a>
+
+        </div>
         <table id="datatable2" class="table display responsive nowrap" dir="rtl">
             <thead>
             <tr>
                 <th class="wd-15p">{{trans('admin.table.id')}}</th>
-                <th class="wd-15p">{{trans('admin.exam_type.name')}}</th>
+                <th class="wd-15p">{{trans('admin.questions.question')}}</th>
+                <th class="wd-15p">{{trans('admin.questions.exam_name')}}</th>
                 <th class="wd-15p">{{trans('admin.actions.actions')}}</th>
             </tr>
             </thead>
             <tbody>
-            @foreach($exam_types as $exam_type)
+            @foreach($questions as $question)
                 <tr>
-                    <td>{{$exam_type->id}}</td>
-                    <td>{{$exam_type->name}}</td>
-                    <td>{!!$exam_type->action!!}</td>
+                    <td>{{$question->id}}</td>
+                    <td>{{$question->description}}</td>
+                    <td>{{$question->exam->title}} - {{$question->exam->category->name}}</td>
+                    <td>{!!$question->action!!}</td>
                 </tr>
             @endforeach
             </tbody>

@@ -43,9 +43,6 @@
 <script src="{{asset('public/lib/peity/jquery.peity.js')}}"></script>
 <script src="{{asset('public/lib/highlightjs/highlight.pack.js')}}"></script>
 <script src="{{asset('public/lib/jqvmap/jquery.vmap.min.js')}}"></script>
-<script src="{{asset('public/lib/jqvmap/maps/jquery.vmap.world.js')}}"></script>
-<script src="{{asset('public/lib/jqvmap/maps/jquery.vmap.usa.js')}}"></script>
-<script src="{{asset('public/lib/jqvmap/maps/jquery.vmap.canada.js')}}"></script>
 
 <script src="{{asset('public/js/bracket.js')}}"></script>
 <script src="{{asset('public/js/jquery.vmap.sampledata.js')}}"></script>

@@ -17,13 +17,22 @@ class CategoriesController extends Controller
         app()->setLocale('ar');
     }
 
-    public function index(){
+    public function index()
+    {
         $categories = $this->repository->getAll();
         return view('backend.categories.index',compact('categories'));
     }
 
-    public function edit(Category $category){
+    public function edit(Category $category)
+    {
         $parentCategories = $this->repository->getParentCategory();
         return view('backend.categories.edit',compact('category','parentCategories'));
+    }
+
+    public function update($category_id,Request $request)
+    {
+
+        $this->repository->update($category_id,$request->all());
+        return redirect('admin/category');
     }
 }

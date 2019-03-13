@@ -39,6 +39,6 @@
 <link href="{{asset('public/lib/chartist/chartist.css')}}" rel="stylesheet">
 
 <!-- Bracket CSS -->
-<link  rel="stylesheet" href="{{asset('public/css/bracket_rtl.css')}}">
+<link  rel="stylesheet" href="{{asset('css/bracket_rtl.css')}}">
 
 @yield('css')

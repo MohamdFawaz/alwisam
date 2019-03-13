@@ -3015,6 +3015,10 @@ tbody.collapse.show {
 .custom-file-control:lang(en):empty::after {
     content: "Choose file...";
 }
+
+.custom-file-control:lang(ar):empty::after {
+    content: "اختر ملف..";
+}
 .custom-file-control::before {
     position: absolute;
     top: -1px;
@@ -3032,6 +3036,10 @@ tbody.collapse.show {
 }
 .custom-file-control:lang(en)::before {
     content: "Browse";
+}
+
+.custom-file-control:lang(ar)::before {
+    content: "اختر صورة";
 }
 
 .nav {

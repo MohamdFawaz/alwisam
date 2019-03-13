@@ -27,8 +27,14 @@ class CategoryRepository extends BaseRepository
         return $category_list;
     }
 
-    public function getParentCategory(){
+    public function getParentCategory()
+    {
         return Category::whereNull('parent')->get();
+    }
+
+    public function getChildCategory()
+    {
+        return Category::whereNotNull('parent')->get();
     }
 
     public function getAll()
@@ -36,4 +42,16 @@ class CategoryRepository extends BaseRepository
         return Category::with('parentCategory')->get();
     }
 
+    public function update($category_id,$input)
+    {
+        $category = Category::where('id',$category_id)->first();
+        $category->name = $input['name'];
+        if (isset($input['image'])){
+            $category->image = $input['image'];
+        }
+        if($category->save()){
+            return true;
+        }
+        return false;
+    }
 }

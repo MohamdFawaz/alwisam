@@ -53,8 +53,7 @@ Route::group(['namespace' => 'Backend', 'as' => 'backend.', 'prefix' => 'admin',
         Route::resource('category','CategoriesController',[
             'names' => [
                 'index' => 'category',
-                'update' => 'category.update',
-            ]
+                ]
         ]);
 
         Route::resource('exam-type','ExamTypeController',[
@@ -62,11 +61,25 @@ Route::group(['namespace' => 'Backend', 'as' => 'backend.', 'prefix' => 'admin',
                 'index' => 'exam-type',
             ]
         ]);
+        Route::get('questions/delete/{exam_id}','QuestionController@delete')->name('question.delete');
+
+        Route::post('questions/upload','QuestionController@import')->name('question.import');
 
         Route::resource('questions','QuestionController',[
           'names' => [
               'index' => 'questions',
-              'create' => 'questions.create'
+              'create' => 'questions.create',
+              'update' => 'questions.update'
+          ]
+        ]);
+        Route::get('exam/delete/{exam_id}','ExamController@delete')->name('exam.delete');
+
+        Route::post('exam/upload','ExamController@import')->name('exam.import');
+
+        Route::resource('exam','ExamController',[
+          'names' => [
+              'index' => 'exam',
+              'create' => 'exam.create'
           ]
         ]);
     });

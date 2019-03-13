@@ -36,12 +36,15 @@ class ExamController extends APIController
     }
 
 
-    public function list($category_id,$code)
+    public function list($category_id,$code = null)
     {
         if($code){
             $data = $this->repository->getCodeExams($category_id,$code);
         }else{
             $data = $this->repository->getFreeExams($category_id);
+        }
+        if(count($data) == 0){
+            return $this->respondWithError(trans('messages.exam.no_exams_found'));
         }
         return $this->respond(trans('messages.exam.list'),$data);
     }

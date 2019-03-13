@@ -2,10 +2,14 @@
 
 namespace App\Repositories\ExamQuestion;
 
+use App\Models\Answer;
 use App\Models\Exam;
 use App\Models\ExamQuestion;
+use App\Models\QuestionAnswer;
+use App\Models\QuestionHint;
 use App\Repositories\QuestionHint\QuestionHintRepository;
 use App\Repositories\BaseRepository;
+use Illuminate\Support\Facades\DB;
 
 
 /**
@@ -35,6 +39,55 @@ class ExamQuestionRepository extends BaseRepository
         if(ExamQuestion::create($input)){
             return true;
         }
+        return false;
+    }
+
+    public function createWAnswer($input){
+        array_pop($input['is_correct']);
+        DB::transaction(function() use ($input)
+        {
+            $newQuestion= ExamQuestion::create([
+                'exam_id' => $input['exam_id'],
+                'description' => $input['description']
+            ]);
+            for ($i = 0;$i < count($input['answers']);$i++){
+                Answer::create([
+                    'answer_text' => $input['answers'][$i],
+                    'question_id' => $newQuestion->id,
+                    'is_correct' => $input['is_correct'][$i],
+                ]);
+            }
+            QuestionHint::create([
+                'question_id' => $newQuestion->id,
+                'hint_text' => $input['hint']
+            ]);
+        });
+        return false;
+    }
+
+
+    public function flushAnswers($question_id)
+    {
+        return Answer::where('question_id',$question_id)->delete();
+    }
+
+    public function updateWAnswer($question_id,$input){
+        array_pop($input['is_correct']);
+        DB::transaction(function() use ($input,$question_id)
+        {
+            $newQuestion = ExamQuestion::whereId($input['exam_id'])->update(['description' => $input['description']]);
+
+            $this->flushAnswers($question_id);
+
+            for ($i = 0;$i < count($input['answers']);$i++){
+                Answer::create([
+                    'answer_text' => $input['answers'][$i],
+                    'question_id' => $question_id,
+                    'is_correct' => $input['is_correct'][$i],
+                ]);
+            }
+            QuestionHint::where('question_id',$question_id)->update(['hint_text' => $input['hint']]);
+        });
         return false;
     }
 
@@ -78,5 +131,13 @@ class ExamQuestionRepository extends BaseRepository
         return false;
     }
 
+    public function getById($question_id){
+        $question = ExamQuestion::with('answers','hint')->whereId($question_id)->first();
+        return $question;
+    }
+
+    public function delete($question_id){
+        return ExamQuestion::where('id',$question_id)->delete();
+    }
 
 }
