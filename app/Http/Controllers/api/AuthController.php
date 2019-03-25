@@ -63,11 +63,23 @@ class AuthController extends APIController
      */
     public function signup(Request $request)
     {
-        $data = json_decode($request->data);
-        if ($this->repository->checkIFEmailOrPhoneExists($data->email,$data->phone)){
+        if($request->from == 'ios'){
+            $phone = $request->phone;
+            $email = $request->email;
+        }else{
+            $data = json_decode($request->data);
+            $phone = $data->phone;
+            $email = $data->email;
+        }
+        if ($this->repository->checkIFEmailOrPhoneExists($email,$phone)){
                 return $this->respondWithError(trans('messages.auth.account_already_exists'));
-            }
-        if($user = $this->repository->create($data,$request->user_image)){
+        }
+        if($request->from == 'ios'){
+            $user = $this->repository->createIos($request->all());
+        }else{
+            $user = $this->repository->create($data,$request->user_image);
+        }
+        if($user){
             return $this->respond(
                 trans('messages.auth.created_successfully'),
                 $user
@@ -119,10 +131,11 @@ class AuthController extends APIController
         if(!$user){
             return $this->respondWithError(trans('messages.auth.phone_not_exists'));
         }
+        //TODO activate send sms method
 //        $sms_code = $this->repository->sendSMS($user->phone);
         $sms_code['response'] = 1;
         if($sms_code['response']== '1'){
-            $user->activate_code = 0000;
+            $user->activate_code = '0000';
             $user->user_status = 0;
             $user->jwt_token = str_random(25);
             $user->save();
@@ -134,8 +147,23 @@ class AuthController extends APIController
     }
 
     public function edit(Request $request){
-        $data = json_decode($request->data);
-        $updated_profile = $this->repository->update($data,$request->user_image);
+        if($request->from == 'ios'){
+            $phone = $request->phone;
+            $email = $request->email;
+        }else{
+            $data = json_decode($request->data);
+            $phone = $data->phone;
+            $email = $data->email;
+        }
+        if ($this->repository->checkIFEmailOrPhoneExists($email,$phone)){
+            return $this->respondWithError(trans('messages.auth.account_already_exists'));
+        }
+
+        if ($request->from == 'ios'){
+            $this->repository->updateIos($request->all());
+        }else{
+            $updated_profile = $this->repository->update($data,$request->user_image);
+        }
         if($updated_profile){
             return $this->respond(
                 trans('messages.profile.updated'),

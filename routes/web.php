@@ -47,9 +47,16 @@ Route::group(['namespace' => 'Backend', 'as' => 'backend.', 'prefix' => 'admin',
 
     Route::Auth();
 
+    Route::get('logout','Auth\LoginController@logout')->name('logout');
+
+    Route::get('reset-password','AuthController@showResetPasswordForm')->name('reset.password');
+
+    Route::post('reset-password','AuthController@resetPassword')->name('reset.password');
+
+
     Route::group(["middleware" => "auth"], function () {
         Route::get('/home','DashboardController@index')->name('dashboard');
-
+        Route::get('/getUsersLineChart.json','DashboardController@getUsersLineChart')->name('dashboard.line.chart');
         Route::resource('category','CategoriesController',[
             'names' => [
                 'index' => 'category',

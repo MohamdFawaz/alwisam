@@ -67,6 +67,8 @@ class ExamController extends Controller
     {
         $data = Excel::toArray(new QuestionImport($request->exam_id),$request->file('import'));
         $this->repository->addQuestionsWAnswerImport($request->exam_id,$data[0]);
+        $request->session()->flash('alert-success', 'User was successful added!');
+
         return redirect('admin/exam');
     }
 }

@@ -140,23 +140,19 @@
                     {{--</div><!-- media-list -->--}}
                 {{--</div><!-- dropdown-menu -->--}}
             {{--</div><!-- dropdown -->--}}
-            {{--<div class="dropdown">--}}
-                {{--<a href="" class="nav-link nav-link-profile" data-toggle="dropdown">--}}
-                    {{--<span class="logged-name hidden-md-down">Katherine</span>--}}
-                    {{--<img src="http://via.placeholder.com/64x64" class="wd-32 rounded-circle" alt="">--}}
-                    {{--<span class="square-10 bg-success"></span>--}}
-                {{--</a>--}}
-                {{--<div class="dropdown-menu dropdown-menu-header wd-200">--}}
-                    {{--<ul class="list-unstyled user-profile-nav">--}}
-                        {{--<li><a href=""><i class="icon ion-ios-person"></i> Edit Profile</a></li>--}}
-                        {{--<li><a href=""><i class="icon ion-ios-gear"></i> Settings</a></li>--}}
-                        {{--<li><a href=""><i class="icon ion-ios-download"></i> Downloads</a></li>--}}
-                        {{--<li><a href=""><i class="icon ion-ios-star"></i> Favorites</a></li>--}}
-                        {{--<li><a href=""><i class="icon ion-ios-folder"></i> Collections</a></li>--}}
-                        {{--<li><a href=""><i class="icon ion-power"></i> Sign Out</a></li>--}}
-                    {{--</ul>--}}
-                {{--</div><!-- dropdown-menu -->--}}
-            {{--</div><!-- dropdown -->--}}
+            <div class="dropdown">
+                <a href="" class="nav-link nav-link-profile" data-toggle="dropdown">
+                    <span class="logged-name hidden-md-down">{{auth()->user()->name}}</span>
+                    <img src="{{auth()->user()->user_image}}" class="wd-32 rounded-circle" alt="">
+                    <span class="square-10 bg-success"></span>
+                </a>
+                <div class="dropdown-menu dropdown-menu-header wd-200">
+                    <ul class="list-unstyled user-profile-nav">
+                        <li><a href={{route('backend.reset.password')}}><i class="icon ion-ios-person"></i>{{trans('admin.header.edit_password')}}</a></li>
+                        <li><a href="{{route('backend.logout')}}"><i class="icon ion-power"></i>{{trans('admin.header.signout')}}</a></li>
+                    </ul>
+                </div><!-- dropdown-menu -->
+            </div><!-- dropdown -->
         {{--</nav>--}}
         {{--<div class="navicon-right">--}}
             {{--<a id="btnRightMenu" href="" class="pos-relative">--}}

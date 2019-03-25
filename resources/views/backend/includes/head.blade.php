@@ -37,8 +37,8 @@
 <link href="{{asset('public/lib/jquery-switchbutton/jquery.switchButton.css')}}" rel="stylesheet">
 <link href="{{asset('public/lib/rickshaw/rickshaw.min.css')}}" rel="stylesheet">
 <link href="{{asset('public/lib/chartist/chartist.css')}}" rel="stylesheet">
-
+<link rel="icon" href="{{asset('public/images/icon/logo-trans.png')}}" type="image/x-icon" />
 <!-- Bracket CSS -->
-<link  rel="stylesheet" href="{{asset('css/bracket_rtl.css')}}">
+<link  rel="stylesheet" href="{{asset('public/css/bracket_rtl.css')}}">
 
 @yield('css')

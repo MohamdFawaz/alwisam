@@ -34,14 +34,14 @@ class ForgotPasswordRequest extends Request
     {
 
         return [
-            'new_password'       => 'required',
+            'phone'       => 'required',
         ];
     }
 
     public function messages()
     {
         return [
-            'new_password.required' => trans('validation.phone'),
+            'phone.required' => trans('validation.phone'),
         ];
     }
 }

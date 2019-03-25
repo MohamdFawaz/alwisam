@@ -75,6 +75,10 @@
 @import url("https://fonts.googleapis.com/css?family=Hind:300,400,500,600,700");
 @import url("https://fonts.googleapis.com/css?family=Lato:300,400,700,900");
 @import url("https://fonts.googleapis.com/css?family=Libre+Barcode+39+Extended+Text");
+@font-face {
+    font-family: myFirstFont;
+    src: url(font/DIN.otf);
+}
 /* ------------------------------------------------------ */
 /* ############### 2. BOOTSTRAP FRAMEWORK ############### */
 /* ------------------------------------------------------ */
@@ -178,7 +182,7 @@ article, aside, dialog, figcaption, figure, footer, header, hgroup, main, nav, s
 
 body {
     margin: 0;
-    font-family: "Cairo", "Helvetica Neue", Arial, sans-serif;
+    font-family: "myFirstFont", "Helvetica Neue", Arial, sans-serif;
     font-size: 0.875rem;
     font-weight: normal;
     line-height: 1.5;
@@ -1567,7 +1571,7 @@ pre code {
     width: 100%;
     padding: 0.65rem 0.75rem;
     font-size: 0.875rem;
-    line-height: 1.25;
+    line-height: 1.5;
     color: #495057;
     background-color: #fff;
     background-image: none;
@@ -3041,7 +3045,17 @@ tbody.collapse.show {
 .custom-file-control:lang(ar)::before {
     content: "اختر صورة";
 }
+.image-upload > input
+{
+    display: none;
+}
 
+.image-upload img
+{
+    padding-top: 9px;
+    width: 39px;
+    cursor: pointer;
+}
 .nav {
     display: flex;
     flex-wrap: wrap;
@@ -13434,7 +13448,7 @@ textarea.parsley-success:focus {
     display: block;
     text-transform: uppercase;
     font-size: 10px;
-    font-family: "Cairo", "Helvetica Neue", Arial, sans-serif;
+    font-family: "myFirstFont", "Helvetica Neue", Arial, sans-serif;
     color: #fff;
     letter-spacing: 1px;
     opacity: .3;
@@ -47414,7 +47428,7 @@ a.hover-white-8:hover, a.hover-white-8:focus {
 }
 
 .tx-mont {
-    font-family: "Montserrat", "Fira Sans", "Helvetica Neue", Arial, sans-serif;
+    font-family: "myFirstFont", "Fira Sans", "Helvetica Neue", Arial, sans-serif;
 }
 
 .tx-lato {

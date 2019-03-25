@@ -17,7 +17,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password','last_name','phone','email','dob','user_status','activate_code','firebase_token','jwt_token'
+        'name', 'email', 'password','user_image','phone','email','dob','user_status','activate_code','firebase_token','jwt_token'
     ];
 
     /**
@@ -51,5 +51,6 @@ class User extends Authenticatable
     {
         return ucwords($value);
     }
+
 
 }

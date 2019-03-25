@@ -61,7 +61,7 @@ class QuestionController extends Controller
 
     /**
      * @param Request $request
-     * @return \Maatwebsite\Excel\Excel
+     * @return array
      */
     public function import(Request $request)
     {

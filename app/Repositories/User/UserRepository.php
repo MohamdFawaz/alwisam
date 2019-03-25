@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Repositories\BaseRepository;
 use App\Repositories\Setting\SettingRepository;
 use Carbon\Carbon;
+use function Complex\theta;
 use Illuminate\Support\Facades\Hash;
 use GuzzleHttp\Client;
 
@@ -68,6 +69,19 @@ class UserRepository extends BaseRepository
 
         return false;
     }
+
+    public function createIos(array $data)
+    {
+        $data['jwt_token'] = str_random(25);
+        $data['user_status'] = 0;
+        $newUser = User::create($data);
+        if ($newUser){
+            return $this->getLoggedUserDetails($newUser);
+        }
+        return false;
+    }
+
+
     public function update($input, $user_image = null)
     {
         $user = User::whereId($input->user_id)->first();

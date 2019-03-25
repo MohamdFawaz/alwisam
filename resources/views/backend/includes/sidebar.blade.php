@@ -1,5 +1,5 @@
 <!-- ########## START: LEFT PANEL ########## -->
-<div class="br-logo"><a href=""><span>[</span>{{trans('admin.app_name')}}<span>]</span></a></div>
+<div class="br-logo"><a href="{{route('backend.dashboard')}}"><span>[</span><img src="{{asset('public/images/icon/grand-black-hori-logo.png')}}" alt="grand-logo" style="max-width: 170px"><span>]</span></a></div>
 <div class="br-sideleft overflow-y-auto">
     <label class="sidebar-label pd-x-15 mg-t-20">{{trans('admin.sidebar.navigation')}}</label>
     <div class="br-sideleft-menu">

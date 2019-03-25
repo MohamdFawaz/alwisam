@@ -39,20 +39,20 @@ class Exam extends Model
                 <a href='".route('backend.exam.delete',$this->id)."' type=\"button\" class=\"btn btn-danger\"><i class=\"fa fa-trash\"></i></a>
               </div>";
 
-//        $action  .="<div class=\"btn-group\" role=\"group\" aria-label=\"Basic example\">
-//                <a type=\"button\" class=\"btn btn-info import\"><i class=\"fa fa-plus\"></i></a>
-//              </div>
-//              <input class=\"file-input\" type=\"file\" name=\"import\" style=\"display: none;\" />";
-
-        $action  .= "<form method=\"POST\" action=\"".route('backend.exam.import')."\" enctype='multipart/form-data'>
+        $action  .= "<div class='btn-group'>
+                    <form id='form-".$this->id."' method=\"POST\" action=\"".route('backend.exam.import')."\" enctype='multipart/form-data'>
                     ".csrf_field()."
                     ".method_field('POST')."
                     <input type='hidden' name='exam_id' value='".$this->id."'>
-                    <div class='btn-group'>
-                    <input type=\"file\" name=\"import\" id=\"file\" class=\"btn btn-danger\" style='width:100px;' '>
+                    <div class=\"image-upload\">
+                        <label for='file-input-".$this->id."'>
+                            <img src='".asset('public/images/icon/uploading-archive.png')."' alt='upload'   title='".trans('admin.exam.import_title')."' />
+                        </label>
+                    
+                        <input data-exam-id='".$this->id."' class='file-input' id='file-input-".$this->id."' name='import' type=\"file\" onchange='addImportFile($this->id)'/>
                     </div>
-                    <button type=\"submit\">Import</button>
-                </form>";
+                </form>
+                </div>";
         return $action;
     }
 

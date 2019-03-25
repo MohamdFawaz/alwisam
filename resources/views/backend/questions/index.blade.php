@@ -17,7 +17,6 @@
     <div class="table-wrapper">
         <div class="">
                 <a class="btn btn-success" href="{{route('backend.questions.create')}}">{{trans('admin.actions.create')}}</a>
-
         </div>
         <table id="datatable2" class="table display responsive nowrap" dir="rtl">
             <thead>

@@ -70,10 +70,10 @@
                 }
             });
         });
-        $('.import').on('click', function() {
-            $('.file-input').trigger('click');
-        });
-
+        function addImportFile(exam_id)
+        {
+            $("#form-"+exam_id).submit();
+        }
     </script>
 
 @endsection
